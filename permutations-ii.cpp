@@ -1,47 +1,29 @@
 class Solution {
 public:
+    vector< vector<int> > ans ; 
 
-    vector<int> res; 
-    vector< vector<int> > ans;
-    unordered_set<string> S;
     int n ;
-    bool vis[8] ={};
-
-    string Hash(){
-        string str = "";
-        for(int &i:res){
-            str+= to_string(i);
+    void DFS(int cur,int step,vector<int>　&nums){
+        if( !step ){
+            ans.push_back( nums );
         }
-        return str;
-    }
-    void DFS(int step,vector<int> &nums){
-        if( !step ) {
-            if( res.size() == n ){
-                string h = Hash();
-
-                if( S.find(h)==S.end()){
-                    ans.push_back( res ) ;
-                    S.insert( h );
-                }
-                
-            }
-            return ;
+        
+        for(int i=cur ; i<n;i++){
+            if( i!=cur && nums[i]==nums[cur] ) continue;
+            swap( nums[i] , nums[cur] );
+            DFS( cur +1 , step -1 ,nums);
         }
 
-        for(int i=0;i<n;i++){
-            if( vis[i] ) continue;
-            vis[i]=1;
-            res.push_back( nums[i] );
-            DFS(step-1,nums);
-
-            vis[i]=0;
-            res.pop_back();
-            DFS(step-1,nums);
+        for(int i=n-1;i>cur;i--){
+            swap( nums[cur],nums[i]);
         }
     }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
-        n  = nums.size() ; 
-        DFS(n,nums);
+        n = nums.size();
+        sort(nums.begin() , nums.end() );
+
+        DFS(0,nums.size(),nums);
+
         return ans ;
     }
 };
