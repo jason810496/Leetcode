@@ -7,8 +7,6 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
-#include<bits/stdc++.h>
-using namespace std;
 
 class Solution {
 public:
