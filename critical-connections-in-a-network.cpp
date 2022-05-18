@@ -14,7 +14,7 @@ public:
         vis[ cur ] = 1;
         for(int &nxt : G[cur] ){
 
-            if( nxt == cur ) continue;
+            if( nxt == par ) continue;
 
             if( !vis[ nxt] ){
 
@@ -31,9 +31,9 @@ public:
     }
     vector<vector<int>> criticalConnections(int n, vector<vector<int>>& edges) {
         G.resize(n);
-        low.resize(n);
-        dfn.resize(n);
-        vis.resize(n);
+        low.resize(n,0);
+        dfn.resize(n,0);
+        vis.resize(n,false);
 
         for(auto &e:edges){
             G[ e[0] ].push_back( e[1] );
